@@ -16,7 +16,7 @@ class HumansAdd(webapp.RequestHandler):
     def get(self):
         h = Human()
 
-        h.fullname = self.request.get('fullname')
+        h.name = self.request.get('name')
         h.type = self.request.get('type')
         try:
             h.email = self.request.get('email')

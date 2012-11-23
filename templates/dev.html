@@ -9,7 +9,7 @@
             max-width: 700px;
         }
         .container-narrow > hr {
-            margin: 30px 0;
+            margin: 20px 0 0;
         }
 
             /* Main marketing message and sign up button */
@@ -28,7 +28,7 @@
 
             /* Supporting marketing content */
         .marketing {
-            margin: 60px 0;
+            margin: 10px 0;
         }
         .marketing p + h4 {
             margin-top: 28px;
@@ -44,33 +44,52 @@
 
     <div class="masthead">
         <ul class="nav nav-pills pull-right">
-            <li  class="active"><a href="/">Home</a></li>
-            <li><a href="/dev">API</a></li>
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/dev">API</a></li>
             <li><a href="/todo">ToDo</a></li>
         </ul>
-        <h3 class="muted">Project name</h3>
+        <h3 class="muted">API Development Page</h3>
     </div>
 
-    <hr>
-
-    <div class="jumbotron">
-        <h1>Super awesome marketing speak!</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <a class="btn btn-large btn-success" href="#">Sign up today</a>
-    </div>
 
     <hr>
 
     <div class="row-fluid marketing">
         <div class="span6">
-            <h4>Subheading</h4>
-            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+            <h4>Humans</h4>
+            <p>
+               list of humans
+            </p>
 
-            <h4>Subheading</h4>
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+            <h4>Add a Human</h4>
 
-            <h4>Subheading</h4>
-            <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+            <form >
+                <div class="control-group">
+                    <label class="control-label" for="inputName">Full Name</label>
+                    <div class="controls">
+                        <input type="text" id="inputName" placeholder="Full Name">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputEmail">Email</label>
+                    <div class="controls">
+                        <input type="text" id="inputEmail" placeholder="Email">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputPassword">Password</label>
+                    <div class="controls">
+                        <input type="text" id="inputPassword" placeholder="Password">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn">Add</button>
+                    </div>
+                </div>
+            </form>
+
+
         </div>
 
         <div class="span6">
@@ -80,8 +99,7 @@
             <h4>Subheading</h4>
             <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
 
-            <h4>Subheading</h4>
-            <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+
         </div>
     </div>
 

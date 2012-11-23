@@ -4,7 +4,8 @@ from com.repreapproval.models.DictModel import DictModel
 __author__ = 'paul.rangel'
 
 class Human(DictModel):
-    fullname = db.StringProperty()
+    name = db.StringProperty()
+    password = db.StringProperty()
     email = db.EmailProperty()
     type = db.StringProperty() #  Agent, Realtor, Buyer
 
