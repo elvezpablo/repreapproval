@@ -1,5 +1,5 @@
-application: wrangeler
-version: 1
+application: repreapproval
+version: 2
 runtime: python
 api_version: 1
 threadsafe: yes
@@ -22,4 +22,4 @@ handlers:
   static_dir: static/pages/docs
 
 - url: .*
-  script: src/main.py
+  script: main.py
