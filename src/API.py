@@ -62,8 +62,8 @@ class LettersPrint(webapp2.RequestHandler):
 class HumansList(webapp2.RequestHandler):
     def get(self):
         humans = Models.Human.all()
-        response = Response.JSONResponse(self.response,humans)
-        logging.debug("bro")
+        response = Response.JSONResponse(self.response)
+        response.setDictModel(humans)
         response.execute()
 
 
@@ -80,7 +80,8 @@ class HumansAdd(webapp2.RequestHandler):
             logging.error("Email format is bad")
             pass
 
-        response = Response.JSONResponse(self.response,h)
+        response = Response.JSONResponse(self.response)
+        response.setDictModel(h)
         response.execute()
 
 
