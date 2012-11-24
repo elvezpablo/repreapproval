@@ -1,6 +1,6 @@
 application: repreapproval
 version: 2
-runtime: python
+runtime: python27
 api_version: 1
 threadsafe: yes
 
@@ -22,4 +22,8 @@ handlers:
   static_dir: static/pages/docs
 
 - url: .*
-  script: main.py
+  script: repreapproval.app
+
+libraries:
+- name: jinja2
+  version: latest

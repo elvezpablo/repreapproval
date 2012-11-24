@@ -1,28 +1,30 @@
 import os
-from google.appengine.ext.webapp import template
-from Models import Human
+
+import Models
 
 
 __author__ = 'paul.rangel'
 
-from google.appengine.ext import webapp
+import webapp2
+import jinja2
 
-class Home(webapp.RequestHandler):
+jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.dirname("templates/")))
+
+class Home(webapp2.RequestHandler):
     def get(self):
-        template_dir = "./templates/"
-        humans = Human.all()
+        humans = Models.Human.all()
         template_values = {
             'humans' : humans
         }
-        path = os.path.join(os.path.dirname(template_dir), 'index.html')
-        self.response.out.write(template.render(path, template_values))
+        template = jinja_environment.get_template('index.html')
+        self.response.out.write(template.render(template_values))
 
-class Dev(webapp.RequestHandler):
+class Dev(webapp2.RequestHandler):
     def get(self):
-        template_dir = "./templates/"
-        humans = Human.all()
+        humans = Models.Human.all()
         template_values = {
             'humans' : humans
         }
-        path = os.path.join(os.path.dirname(template_dir), 'dev.html')
-        self.response.out.write(template.render(path, template_values))
+
+        template = jinja_environment.get_template('dev.html')
+        self.response.out.write(template.render(template_values))

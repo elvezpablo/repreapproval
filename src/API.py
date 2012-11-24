@@ -1,26 +1,29 @@
 import os
+from google.appengine._internal.django.utils import simplejson
+from google.appengine.api.datastore_errors import BadValueError
 from google.appengine.ext.webapp import template
-from google.appengine.ext import webapp
+import webapp2
+
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
-from Models import Human, Letters
+import Models
 
 __author__ = 'paul.rangel'
 
-class Home(webapp.RequestHandler):
+class Home(webapp2.RequestHandler):
     def get(self):
         template_dir = "../templates/"
-        humans = Human.all()
+        humans = Models.Human.all()
         template_values = {
             'humans' : humans
         }
         path = os.path.join(os.path.dirname(template_dir), 'index.html')
         self.response.out.write(template.render(path, template_values))
 
-class Dev(webapp.RequestHandler):
+class Dev(webapp2.RequestHandler):
     def get(self):
         template_dir = "../templates/"
-        humans = Human.all()
+        humans = Models.Human.all()
         template_values = {
             'humans' : humans
         }
@@ -29,17 +32,17 @@ class Dev(webapp.RequestHandler):
 
 
 
-class LettersList(webapp.RequestHandler):
+class LettersList(webapp2.RequestHandler):
     def get(self):
         hid = self.request.get('hid') # get the human requesting the info
-        l = Letters.all();
+        l = Models.Letters.all();
         # get letters associated with the person requesting, validate human has permission
         l.filter("humans IN", hid)
         # TODO: get expired letters or not
         # TODO: list by created date
         pass
 
-class LettersAdd(webapp.RequestHandler):
+class LettersAdd(webapp2.RequestHandler):
     def get(self):
         arguments = self.request.arguments()
         # agent must add the max price and expiration
@@ -53,7 +56,7 @@ class LettersAdd(webapp.RequestHandler):
         pass
 
 
-class LettersEdit(webapp.RequestHandler):
+class LettersEdit(webapp2.RequestHandler):
     def get(self):
         # TODO: validate data
         # TODO: validate permissions
@@ -63,35 +66,41 @@ class LettersEdit(webapp.RequestHandler):
 
         pass
 
-class LettersDelete(webapp.RequestHandler):
+class LettersDelete(webapp2.RequestHandler):
     def get(self):
         # TODO: validate data
         # TODO: validate permissions
         pass
 
-
-
-
-class GeneratePDF(webapp.RequestHandler):
+class LettersPrint(webapp2.RequestHandler):
     def get(self):
+        # TODO: validate data
+        # TODO: validate permissions
+        generator = GeneratePDF()
+        generator.setResponse(self.response)
+        generator.getPDF()
+
+
+class GeneratePDF(object):
+    def setResponse(self, response):
+        self.response = response
+    def getPDF(self):
         self.response.headers['Content-Type'] = 'application/pdf'
-        self.response.headers['Content-Disposition'] = 'attachment; filename=paul1.pdf'
+        self.response.headers['Content-Disposition'] = 'attachment; filename=paul2.pdf'
         c = canvas.Canvas(self.response.out, pagesize=letter )
         c.drawString(100, 300, "Hello paul")
         c.showPage()
         c.save()
 
-
-
-class HumansList(webapp.RequestHandler):
+class HumansList(webapp2.RequestHandler):
     def get(self):
-        humans = Human.all()
+        humans = Models.Human.all()
         self.response.headers['Content-Type'] = 'application/json'
         self.response.out.write(simplejson.dumps([h.to_dict() for h in humans]))
 
-class HumansAdd(webapp.RequestHandler):
+class HumansAdd(webapp2.RequestHandler):
     def get(self):
-        h = Human()
+        h = Models.Human()
 
         h.name = self.request.get('name')
         h.type = self.request.get('type')
@@ -105,11 +114,11 @@ class HumansAdd(webapp.RequestHandler):
         self.response.out.write(simplejson.dumps([h.to_dict()]))
 
 
-class HumansEdit(webapp.RequestHandler):
+class HumansEdit(webapp2.RequestHandler):
     def post(self):
         pass
 
-class HumansDelete(webapp.RequestHandler):
+class HumansDelete(webapp2.RequestHandler):
     def post(self):
         pass
 
