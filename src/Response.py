@@ -1,5 +1,5 @@
 import collections
-import simplejson
+import json
 
 __author__ = 'paul.rangel'
 
@@ -35,6 +35,6 @@ class JSONResponse(object):
         self.json[0]["data"] = self.getData()
 
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(simplejson.dumps(self.json))
+        self.response.out.write(json.dumps(self.json))
 
 
