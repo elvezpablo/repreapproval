@@ -60,34 +60,34 @@
         <div class="span6">
             <h4>Humans</h4>
             <p>
-               dude
+                <div class="item"></div>
             </p>
 
             <h4>Add a Human</h4>
 
-            <form >
+            <form action="/api/v1/humans/add" method="POST" >
                 <div class="control-group">
                     <label class="control-label" for="inputName">Full Name</label>
                     <div class="controls">
-                        <input type="text" id="inputName" placeholder="Full Name">
+                        <input type="text" name="name" id="inputName" placeholder="Full Name">
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="inputEmail">Email</label>
                     <div class="controls">
-                        <input type="text" id="inputEmail" placeholder="Email">
+                        <input type="text" name="email" id="inputEmail" placeholder="Email">
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="inputPassword">Password</label>
                     <div class="controls">
-                        <input type="text" id="inputPassword" placeholder="Password">
+                        <input type="text" name="password" id="inputPassword" placeholder="Password">
                     </div>
                 </div>
                 <div class="control-group">
                     <label class="control-label" for="inputType">Password</label>
                     <div class="controls">
-                        <select id="inputType">
+                        <select id="inputType" name="type">
                             <option>agent</option>
                             <option>buyer</option>
                             <option>realtor</option>

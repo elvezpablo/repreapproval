@@ -2,7 +2,7 @@ import logging
 
 from google.appengine.api.datastore_errors import BadValueError
 import webapp2
-
+import Email
 
 import Models
 import PDF
@@ -68,10 +68,11 @@ class HumansList(webapp2.RequestHandler):
 
 
 class HumansAdd(webapp2.RequestHandler):
-    def get(self):
+    def post(self):
         h = Models.Human()
-
         h.name = self.request.get('name')
+        # TODO: generate temp password and send in email
+        h.password = self.request.get('password')
         h.type = self.request.get('type')
         try:
             h.email = self.request.get('email')
@@ -80,8 +81,15 @@ class HumansAdd(webapp2.RequestHandler):
             logging.error("Email format is bad")
             pass
 
+
+        mailer = Email.SignUpMailer()
+        mailer.name = h.name
+        mailer.email = h.email
+        mailer.send()
+
         response = Response.JSONResponse(self.response)
         response.setDictModel(h)
+        response.setMessage("Invite email sent!")
         response.execute()
 
 

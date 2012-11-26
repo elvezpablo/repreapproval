@@ -18,8 +18,6 @@ app = webapp2.WSGIApplication(
         ('/api/v[0-9]/letters/add', API.LettersAdd),
         ('/api/v[0-9]/letters/edit', API.LettersEdit),
         ('/api/v[0-9]/letters/print', API.LettersPrint),
-        ('/api/v[0-9]/letters/*', API.LettersList),
-        ('/dev', Views.Dev),
-        ('/', Views.Home)],
+        ('/api/v[0-9]/letters/*', API.LettersList)],
     debug=True)
 

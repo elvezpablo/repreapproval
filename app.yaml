@@ -21,6 +21,14 @@ handlers:
 - url: /docs
   static_dir: static/pages/docs
 
+- url: /
+  static_files: static/pages/index.html
+  upload: static/pages/(.*)
+
+- url: /dev
+  static_files: static/pages/dev.html
+  upload: static/pages/(.*)
+
 - url: .*
   script: repreapproval.app
 
