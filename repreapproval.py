@@ -6,7 +6,6 @@ sys.path.insert(0, './libs/reportlab.zip')
 sys.path.insert(1, './src')
 
 import API
-import Views
 
 import webapp2
 
