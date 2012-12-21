@@ -54,6 +54,7 @@ class LettersPrint(webapp2.RequestHandler):
     def get(self):
         # TODO: validate data
         # TODO: validate permissions
+        # This is throwing an error now but it is working, also of note it's hiding the error on the live server
         generator = PDF.GeneratePDF()
         generator.setResponse(self.response)
         generator.getPDF()
@@ -81,11 +82,11 @@ class HumansAdd(webapp2.RequestHandler):
             logging.error("Email format is bad")
             pass
 
-
-        mailer = Email.SignUpMailer()
-        mailer.name = h.name
-        mailer.email = h.email
-        mailer.send()
+        # TODO: this throws an error that the email can't be set because the user isn't valid admin user has been added but app engine still doesn't like it, need to revisit
+#        mailer = Email.SignUpMailer()
+#        mailer.name = h.name
+#        mailer.email = h.email
+#        mailer.send()
 
         response = Response.JSONResponse(self.response)
         response.setDictModel(h)
