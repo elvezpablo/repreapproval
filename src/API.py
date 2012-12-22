@@ -1,6 +1,7 @@
 import logging
 
 from google.appengine.api.datastore_errors import BadValueError
+from google.appengine.ext import db
 import webapp2
 import Email
 
@@ -19,6 +20,33 @@ class LettersList(webapp2.RequestHandler):
         # TODO: get expired letters or not
         # TODO: list by created date
         pass
+
+class RequestAdd(webapp2.RequestHandler):
+    def get(self):
+        # look for matching human by email
+        requestEmail = self.request.get('requestEmail')
+        human = db.GqlQuery("SELECT * "
+                    "FROM Human "
+                    "WHERE EMAIL IS :1 LIMIT 1",
+            requestEmail)
+
+        if human:
+            self.response.out.write("human!")
+        # if a human result,
+            # then post a request referencing human.id
+
+        # else
+            # abort... bad email messaging
+
+        pass
+
+class RequestList(webapp2.RequestHandler):
+    def get(self):
+        requests = Models.LetterRequest.all()
+        response = Response.JSONResponse(self.response)
+        response.setDictModel(requests)
+        response.execute()
+
 
 class LettersAdd(webapp2.RequestHandler):
     def get(self):

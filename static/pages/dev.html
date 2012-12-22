@@ -115,6 +115,35 @@
         </div>
 
         <div class="span6">
+            <h4>Make Pre-approval Request</h4>
+            <form action="/api/v1/request/add" method="POST" >
+                <div class="control-group">
+                    <label class="control-label" for="requestEmail">Email</label>
+                    <div class="controls">
+                        <input type="text" name="email" id="requestEmail" placeholder="Email">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="requestAddress">Property Address</label>
+                    <div class="controls">
+                        <input type="text" name="name" id="requestAddress" placeholder="Property Address">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="requestPrice">Loan Value</label>
+                    <div class="controls">
+                        <input type="text" name="name" id="requestPrice" placeholder="Loan Value">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <button type="submit" class="btn">Submit Pre-approval Request</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="span6">
             <h4>API Calls</h4>
             <ul>
                 <li></li>
