@@ -18,6 +18,7 @@ app = webapp2.WSGIApplication(
         ('/api/v[0-9]/request/add', API.RequestAdd),
         ('/api/v[0-9]/letters/edit', API.LettersEdit),
         ('/api/v[0-9]/letters/print', API.LettersPrint),
-        ('/api/v[0-9]/request/*', API.RequestList)],
+        ('/api/v[0-9]/request/*', API.RequestList)
+    ],
     debug=True)
 

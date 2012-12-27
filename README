@@ -8,3 +8,10 @@ Web App
 
 Mobile App
 
+Models needed:
+Request
+    hid (human id)
+    address
+    date
+    value
+    expiration (auto generated?)

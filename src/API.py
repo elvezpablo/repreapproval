@@ -21,33 +21,6 @@ class LettersList(webapp2.RequestHandler):
         # TODO: list by created date
         pass
 
-class RequestAdd(webapp2.RequestHandler):
-    def get(self):
-        # look for matching human by email
-        requestEmail = self.request.get('requestEmail')
-        human = db.GqlQuery("SELECT * "
-                    "FROM Human "
-                    "WHERE EMAIL IS :1 LIMIT 1",
-            requestEmail)
-
-        if human:
-            self.response.out.write("human!")
-        # if a human result,
-            # then post a request referencing human.id
-
-        # else
-            # abort... bad email messaging
-
-        pass
-
-class RequestList(webapp2.RequestHandler):
-    def get(self):
-        requests = Models.LetterRequest.all()
-        response = Response.JSONResponse(self.response)
-        response.setDictModel(requests)
-        response.execute()
-
-
 class LettersAdd(webapp2.RequestHandler):
     def get(self):
         arguments = self.request.arguments()
@@ -86,6 +59,37 @@ class LettersPrint(webapp2.RequestHandler):
         generator = PDF.GeneratePDF()
         generator.setResponse(self.response)
         generator.getPDF()
+
+def human_key_by_email(human_email):
+    # https://developers.google.com/appengine/docs/python/gettingstartedpython27/usingdatastore
+    return db.Key.from_path('Human', human_email)
+
+class RequestAdd(webapp2.RequestHandler):
+    def post(self):
+        # look for matching human by email
+        requestEmail = self.request.get('requestEmail')
+        human = db.GqlQuery("SELECT * "
+                            "FROM Human "
+                            "WHERE ANCESTOR IS :1 "
+                            "LIMIT 1",
+            human_key_by_email(requestEmail))
+
+        if human:
+            self.response.out.write("human!")
+            # if a human result,
+            # then post a request referencing human.id
+
+            # else
+            # abort... bad email messaging
+
+        pass
+
+class RequestList(webapp2.RequestHandler):
+    def get(self):
+        requests = Models.LetterRequest.all()
+        response = Response.JSONResponse(self.response)
+        response.setDictModel(requests)
+        response.execute()
 
 
 class HumansList(webapp2.RequestHandler):
