@@ -33,7 +33,7 @@ class LetterRequest(DictModel):
     price = db.FloatProperty()
     address = db.PostalAddressProperty()
     date = db.DateTimeProperty()
-    humanId = db.ListProperty(db.Key)
+#    humanId = db.ListProperty(db.Key) no need to store human key as this model is a child of human model in googleAppEngine DB (should work? - double check)
     approved = db.BooleanProperty()
 
 class Meta(DictModel):

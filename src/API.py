@@ -68,21 +68,29 @@ class RequestAdd(webapp2.RequestHandler):
     def post(self):
         # look for matching human by email
         requestEmail = self.request.get('requestEmail')
-        human = db.GqlQuery("SELECT * "
+        humans = db.GqlQuery("SELECT * "
                             "FROM Human "
                             "WHERE ANCESTOR IS :1 "
                             "LIMIT 1",
             human_key_by_email(requestEmail))
 
-        if human:
-            self.response.out.write("human!")
+        for human in humans.run(limit=1):
+            self.response.out.write("saving request since we found a matching human!")
+            lr = Models.LetterRequest(parent=human)
+            lr.price = self.request.get('requestPrice')
+            lr.email = self.request.get('requestEmail')
+            lr.address = self.request.get('requestAddress')
+            lr.put()
+#        else:
+#            self.response.out.write("no matching human by email in db for email :1",requestEmail)
+
             # if a human result,
             # then post a request referencing human.id
 
             # else
             # abort... bad email messaging
 
-        pass
+#        pass
 
 class RequestList(webapp2.RequestHandler):
     def get(self):
