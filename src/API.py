@@ -1,6 +1,7 @@
 import logging
 
 from google.appengine.api.datastore_errors import BadValueError
+from google.appengine.ext import db
 import webapp2
 import Email
 
@@ -58,6 +59,47 @@ class LettersPrint(webapp2.RequestHandler):
         generator = PDF.GeneratePDF()
         generator.setResponse(self.response)
         generator.getPDF()
+
+def human_key_by_email(human_email):
+    # https://developers.google.com/appengine/docs/python/gettingstartedpython27/usingdatastore
+    return db.Key.from_path('Human', human_email)
+
+class RequestAdd(webapp2.RequestHandler):
+    def post(self):
+        # dude
+        # again
+        # look for matching human by email
+        requestEmail = self.request.get('requestEmail')
+        humans = db.GqlQuery("SELECT * "
+                            "FROM Human "
+                            "WHERE ANCESTOR IS :1 "
+                            "LIMIT 1",
+            human_key_by_email(requestEmail))
+
+        for human in humans.run(limit=1):
+            self.response.out.write("saving request since we found a matching human!")
+            lr = Models.LetterRequest(parent=human)
+            lr.price = self.request.get('requestPrice')
+            lr.email = self.request.get('requestEmail')
+            lr.address = self.request.get('requestAddress')
+            lr.put()
+#        else:
+#            self.response.out.write("no matching human by email in db for email :1",requestEmail)
+
+            # if a human result,
+            # then post a request referencing human.id
+
+            # else
+            # abort... bad email messaging
+
+#        pass
+
+class RequestList(webapp2.RequestHandler):
+    def get(self):
+        requests = Models.LetterRequest.all()
+        response = Response.JSONResponse(self.response)
+        response.setDictModel(requests)
+        response.execute()
 
 
 class HumansList(webapp2.RequestHandler):

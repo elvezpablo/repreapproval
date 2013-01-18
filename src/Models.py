@@ -17,23 +17,24 @@ class DictModel(db.Model):
 class Human(DictModel):
     name = db.StringProperty()
     password = db.StringProperty()
-    email = db.EmailProperty()
-    type = db.StringProperty() #  Agent, Realtor, Buyer
+    email = db.EmailProperty() # make unique
+    type = db.StringProperty() # Agent, Realtor, Buyer
 
 class Letters(DictModel):
-    max_price =  db.FloatProperty()
-    requests = db.ListProperty(db.Key)
+    approvedPrice =  db.FloatProperty()
     created = db.DateTimeProperty()
     printed = db.DateTimeProperty()
     expires = db.DateTimeProperty()
     address = db.PostalAddressProperty()
-    humans = db.ListProperty(db.Key)
-
+    humanId = db.ListProperty(db.Key)
+    letterRequestId = db.ListProperty(db.Key)
 
 class LetterRequest(DictModel):
     price = db.FloatProperty()
+    address = db.PostalAddressProperty()
     date = db.DateTimeProperty()
-
+#    humanId = db.ListProperty(db.Key) no need to store human key as this model is a child of human model in googleAppEngine DB (should work? - double check)
+    approved = db.BooleanProperty()
 
 class Meta(DictModel):
     record = db.ReferenceProperty()
