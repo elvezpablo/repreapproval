@@ -35,6 +35,6 @@ class JSONResponse(object):
         self.json[0]["data"] = self.getData()
 
         self.response.headers['Content-Type'] = 'application/json'
-        self.response.out.write(json.dumps(self.json))
+        self.response.out.write(json.dumps(self.json,False,True,True,True,None,5))
 
 
