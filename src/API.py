@@ -66,6 +66,7 @@ def human_key_by_email(human_email):
 
 class RequestAdd(webapp2.RequestHandler):
     def post(self):
+        # dude
         # look for matching human by email
         requestEmail = self.request.get('requestEmail')
         humans = db.GqlQuery("SELECT * "
