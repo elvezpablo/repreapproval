@@ -70,16 +70,18 @@ class RequestAdd(webapp2.RequestHandler):
         # again
         # look for matching human by email
         requestEmail = self.request.get('requestEmail')
-        humans = db.GqlQuery("SELECT * "
-                            "FROM Human "
-                            "WHERE ANCESTOR IS :1 "
-                            "LIMIT 1",
-            human_key_by_email(requestEmail))
+        humans = Models.Human.all()
+        humans.filter('email =', requestEmail)
+#        humans = db.GqlQuery("SELECT * "
+#                            "FROM Human "
+#                            "WHERE ANCESTOR IS :1 "
+#                            "LIMIT 1",
+#            human_key_by_email(requestEmail))
 
         for human in humans.run(limit=1):
             self.response.out.write("saving request since we found a matching human!")
             lr = Models.LetterRequest(parent=human)
-            lr.price = self.request.get('requestPrice')
+            lr.price = float(self.request.get('requestPrice'))
             lr.email = self.request.get('requestEmail')
             lr.address = self.request.get('requestAddress')
             lr.put()
