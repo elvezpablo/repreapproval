@@ -4,99 +4,361 @@
 <head>
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-    <style type="text/css">
-            /* Custom container */
-        .container-narrow {
-            margin: 0 auto;
-            max-width: 700px;
-        }
-        .container-narrow > hr {
-            margin: 30px 0;
-        }
-
-            /* Main marketing message and sign up button */
-        .jumbotron {
-            margin: 60px 0;
-            text-align: center;
-        }
-        .jumbotron h1 {
-            font-size: 72px;
-            line-height: 1;
-        }
-        .jumbotron .btn {
-            font-size: 21px;
-            padding: 14px 24px;
-        }
-
-            /* Supporting marketing content */
-        .marketing {
-            margin: 60px 0;
-        }
-        .marketing p + h4 {
-            margin-top: 28px;
-        }
-
-    </style>
-    <title></title>
     <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/rpa-main.css">
+
+    <script src="js/jquery-1.8.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/handlebars-1.0.0.beta.6.js"></script>
+    <script src="js/ember-1.0.0-pre.4.js"></script>
+
+
+    <script type="text/javascript">
+
+        window.RPA = Ember.Application.create({
+            VERSION: "1.0.0"
+        });
+
+        RPA.ready = function() {
+            console.log("app is ready");
+        };
+
+
+        RPA.Router = Ember.Router.extend({
+            enableLogging : true
+        });
+
+        RPA.Router.map(function() {
+            this.route("create", { path: "/create" });
+            this.route("request", { path: "/request" });
+            this.route("profile", { path: "/profile" });
+            this.route("logout", { path: "/logout" });
+            this.route("details", { path: "/details" });
+        });
+
+        RPA.ApplicationController = Ember.Controller.extend({
+            user : "Paul Rangel"
+        });
+
+        /**
+         * Index
+         */
+
+        RPA.IndexController = Ember.Controller.extend({
+            firstName: "Dude",
+            lastName: "face",
+            title: "some rad title"
+        });
+
+        RPA.IndexRoute = Ember.Route.extend({
+            setUpController : function(controller, welcomeData) {
+                controller.set('content',welcomeData );
+            }
+        });
+        /**
+         * Create
+         */
+        RPA.CreateController = Ember.Controller.extend({
+            title : "One title"
+        });
+
+        RPA.CreateRoute = Ember.Route.extend({
+            setUpController : function(controller, data) {
+                controller.set('content',data );
+            }
+        });
+        /**
+         * Request
+         */
+        RPA.RequestController = Ember.Controller.extend({
+            title : "Two title"
+        });
+
+        RPA.RequestRoute = Ember.Route.extend({
+            setUpController : function(controller, data) {
+                controller.set('content',data );
+            }
+        });
+
+
+        RPA.LoginController = Ember.Controller.extend({
+            attemptLogin : function() {
+                 console.log("attemping login");
+            }
+        });
+
+    </script>
+
+    <title></title>
 </head>
 <body>
 
-<div class="container-narrow">
 
-    <div class="masthead">
-        <ul class="nav nav-pills pull-right">
-            <li  class="active"><a href="/">Home</a></li>
-            <li><a href="/dev">API</a></li>
-            <li><a href="/todo">ToDo</a></li>
-        </ul>
-        <h3 class="muted">Project name</h3>
-    </div>
-
-    <hr>
-
-    <div class="jumbotron">
-        <h1>Super awesome marketing speak!</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <a class="btn btn-large btn-success" href="#">Sign up today</a>
-    </div>
-
-    <hr>
-
-    <div class="row-fluid marketing">
-        <div class="span6">
-            <h4>Subheading</h4>
-            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-            <h4>Subheading</h4>
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-            <h4>Subheading</h4>
-            <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+<script type="text/x-handlebars" >
+    <div class="container">
+        <div class="row header clearfix">
+            <div class="span3 logo">{{#linkTo "index"}}<img src="http://placehold.it/80&text=logo" class="header-logo">{{/linkTo}}</div>
+            <div class="span4 offset5">
+                <div class="well well-small" style="text-align: center">
+                <ul class="inline" style="margin-bottom: 0px;">
+                    <li>{{#linkTo "profile"}}Welcome, {{user}} <i class="icon-cog"></i>{{/linkTo}}</li>
+                    <li>|</li>
+                    <li>{{#linkTo "logout"}}logout{{/linkTo}}</li>
+                </ul>
+                </div>
+            </div>
         </div>
 
-        <div class="span6">
-            <h4>Subheading</h4>
-            <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+        <div >
+            <ul class="nav nav-tabs">
+                <li>{{#linkTo "index"}}<i class="icon-home"></i> Home{{/linkTo}}</li>
+                <li>{{#linkTo "create"}}<i class="icon-file-alt"></i> Create{{/linkTo}}</li>
+                <li>{{#linkTo "request"}}<i class="icon-pencil"></i>Request{{/linkTo}}</li>
+            </ul>
+        </div>
+    </div>
+    {{ outlet }}
+    <div class="container">
+        <div class="row">
+            <div class="span4">footer</div>
+        </div>
+    </div>
+</script>
 
-            <h4>Subheading</h4>
-            <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
+<script type="text/x-handlebars" data-template-name="index"  >
+    <div class="container">
+        <div class="row">
+            <div class="span4">
+                <h4 style="border-bottom: 1px dotted #ccc;">Recent Activity</h4>
 
-            <h4>Subheading</h4>
-            <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+                <div class="recent-letters">
+
+                   <div class="letter">
+                       <div class="letter-new"><i class="icon-2x icon-file"></i> New Letter</div>
+                       <div class="letter-list-details">Added By: Paul R. | 02/01/13 | {{#linkTo "details"}}Edit{{/linkTo}}</div>
+                   </div>
+
+                    <div class="letter">
+                        <div class="letter-new"><i class="icon-2x icon-file"></i> New Letter</div>
+                        <div class="letter-list-details">Added By: Paul R. | 02/01/13 | {{#linkTo "details"}}Edit{{/linkTo}}</div>
+                    </div>
+
+                    <div class="letter">
+                        <div class="letter-new"><i class="icon-2x icon-file-alt"></i> Edited Letter</div>
+                        <div class="letter-list-details">Added By: Paul R. | 02/01/13 | {{#linkTo "details"}}Edit{{/linkTo}}</div>
+                    </div>
+
+                    <div class="letter">
+                        <div class="letter-new"><i class="icon-2x icon-file"></i> New Letter</div>
+                        <div class="letter-list-details">Added By: Paul R. | 02/01/13 | {{#linkTo "details"}}Edit{{/linkTo}}</div>
+                    </div>
+
+                    <div class="letter">
+                        <div class="letter-new"><i class="icon-2x icon-file-alt"></i> Edited Letter</div>
+                        <div class="letter-list-details">Added By: Paul R. | 02/01/13 | {{#linkTo "details"}}Edit{{/linkTo}}</div>
+                    </div>
+
+                    <div class="letter">
+                        <div class="letter-new"><i class="icon-2x icon-file-alt"></i> Edited Letter</div>
+                        <div class="letter-list-details">Added By: Paul R. | 02/01/13 | {{#linkTo "details"}}Edit{{/linkTo}}</div>
+                    </div>
+
+                    <div class="letter">
+                        <div class="letter-new"><i class="icon-2x icon-file-alt"></i> Edited Letter</div>
+                        <div class="letter-list-details">Added By: Paul R. | 02/01/13 | {{#linkTo "details"}}Edit{{/linkTo}}</div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="span4">
+                <div class="tips" style="height: 250px">
+                    <h4 style="border-bottom: 1px dotted #ccc;">Quick Tip</h4>
+                    <blockquote style="border-left: 0; padding: 5px;">
+                    <p>
+                        Welcome to RePreApproval if this is your first time here
+                        we suggest that you <a href="#">watch our intro video</a>. Don't worry it
+                        is quick an will get you up and running in no time!
+                    </p>
+                    <small>Tim <cite title="Source Title">CEO</cite></small>
+
+                    </blockquote>
+                    <div class="pagination pagination-mini pagination-right " style="margin: 5px 0 0 0">
+                        <ul >
+                            <li><a href="#">&laquo;</a></li>
+                            <li><a href="#">&raquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="well well-small quick-create">
+                    <h4 style="margin: 4px 0">Get started!</h4>
+                    <p>
+                        Get started on your pre approval letter. The process only takes minutes
+                        and will take hours off of the purchase process.
+                    </p>
+                    <button class="btn btn-block btn-success"><i class="icon-large icon-file-alt"></i> Create New Letter</button>
+                </div>
+                <div class="well well-small quick-change ">
+                    <h4 style="margin: 4px 0">Request a new letter</h4>
+                    <p>
+                        Edit your preapproval letter and download immediately.
+                    </p>
+                    <button class="btn btn-block btn-info"><i class="icon-large icon-pencil"></i> Request Change</button>
+                </div>
+            </div>
+            <div class="span4">
+                <div class="video well" style="padding: 0">
+                    <!--<iframe width="300" height="260" src="http://www.youtube.com/embed/YoA_Z7y8f6Q?list=FLdzdpxE-dIrfKWCNC6bNJlg" frameborder="0" allowfullscreen></iframe>-->
+                    <img src="http://placehold.it/300x240&text=video" alt="youtube video"/>
+                </div>
+                <div class="testimonials well  well-medium">
+                    <blockquote style="border-left: 0; margin-bottom: 5px;">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+                        <small>Someone famous <cite title="Source Title">Source Title</cite></small>
+                    </blockquote>
+                    <div class="pagination pagination-mini pagination-right " style="margin: 5px 0 0 0">
+                        <ul >
+                            <li><a href="#">&laquo;</a></li>
+                            <li><a href="#">&raquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="support well  well-medium">
+                    <h4 style="margin: 0 0 4px;">Support</h4>
+                    <p>
+                        Contact us for billing or technical support at any time. We will get back to you as soon as possible
+                        with a solution.
+                    </p>
+                    <ul class="inline" style="margin-bottom: 0px;">
+                        <li><i class="icon-large icon-twitter-sign"></i></li>
+                        <!--<li><i class="icon-large icon-facebook-sign"></i></li>-->
+                        <!--<li><i class="icon-large icon-google-plus-sign"></i></li>-->
+                        <li><i class="icon-large icon-phone"></i> (707) 234-1111</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
 
-    <hr>
+</script>
 
-    <div class="footer">
-        <p>&copy; Company 2012</p>
+<script type="text/x-handlebars" data-template-name="create"  >
+    <div class="container">
+        <div class="row">
+            <div class="span12">
+                <div class="btn-group">
+                    <button class="btn active">Client Data</button>
+                    <button class="btn">Author Letter</button>
+                    <button class="btn">Review & Approve</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span6">
+
+                <form class="form-horizontal">
+
+                        <legend>Client Information</legend>
+                        <div class="control-group">
+                            <label class="control-label" for="existingClient">Existing Client</label>
+                            <div class="controls">
+                            <select id="existingClient">
+                                <option>Schmoe, Joe</option>
+                                <option>Smith, John</option>
+                                <option>Zebra, Fish</option>
+                            </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inputEmail">Email</label>
+                            <div class="controls">
+                                <input type="text" id="inputEmail" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="inputPassword">Password</label>
+                            <div class="controls">
+                                <input type="password" id="inputPassword" placeholder="Password">
+                            </div>
+                        </div>
+
+                </form>
+            </div>
+            <div class="span6">
+                <form class="form-horizontal">
+                    <legend>Loan Data</legend>
+                    <div class="control-group">
+                        <label class="control-label" for="inputPurchasePrice">Purchase Price</label>
+                        <div class="controls">
+                            <div class="input-prepend input-append">
+                                <span class="add-on">$</span>
+                                <input type="text" class="input-medium " id="inputPurchasePrice">
+                                <span class="add-on">.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="inputLoanTerm">Loan Term</label>
+                        <div class="controls">
+                            <div class="input-prepend input-append">
+                                <input type="text" class="input-medium " id="inputLoanTerm">
+                                <div class="btn-group">
+                                    <button class="btn dropdown-toggle" data-toggle="dropdown">
+                                        Years
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="#">Months</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="inputDownPayment">Down Payment</label>
+                        <div class="controls">
+                            <div class="input-prepend input-append">
+                                <span class="add-on">$</span>
+                                <input type="text" class="input-medium " id="inputDownPayment">
+                                <span class="add-on">.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label" for="inputMaxLoanAmount">Max Loan Amount</label>
+                        <div class="controls">
+                            <div class="input-prepend input-append">
+                                <span class="add-on">$</span>
+                                <input type="text" class="input-medium " id="inputMaxLoanAmount">
+                                <span class="add-on">.00</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn">Sign in</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 
-</div>
 
 
-<script src="js/jquery-1.8.3.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+</script>
+
+<script type="text/x-handlebars" data-template-name="request"  >
+    <div>two template</div>
+</script>
+
+
+
+
 </body>
 </html>
