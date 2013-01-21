@@ -19,6 +19,7 @@ class Human(DictModel):
     password = db.StringProperty()
     email = db.EmailProperty() # make unique
     type = db.StringProperty() # Agent, Realtor, Buyer
+    agent = db.Key() # if you are a buyer, you MUST have an agent/realtor/whatever we call it - 'agent' in the db case  --> store this as a key ... so on a form in admin where an agent adds a client/buyer, it will automatically use an agent key to fill out a client.agent
 
 class Letters(DictModel):
     approvedPrice =  db.FloatProperty()

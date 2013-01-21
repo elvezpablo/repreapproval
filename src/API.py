@@ -77,16 +77,26 @@ class RequestAdd(webapp2.RequestHandler):
 #                            "WHERE ANCESTOR IS :1 "
 #                            "LIMIT 1",
 #            human_key_by_email(requestEmail))
-
-        for human in humans.run(limit=1):
+        humansResult = humans.fetch(1)
+        if humansResult:
+        #for human in humans.run(limit=1):
+            human = humansResult[0]
             self.response.out.write("saving request since we found a matching human!")
             lr = Models.LetterRequest(parent=human)
             lr.price = float(self.request.get('requestPrice'))
             lr.email = self.request.get('requestEmail')
             lr.address = self.request.get('requestAddress')
             lr.put()
-#        else:
-#            self.response.out.write("no matching human by email in db for email :1",requestEmail)
+
+            # trigger message to be sent to agent saying a request for letter is ready
+                # messagePayload = lr (letter request object)
+                # type = some enum for message type >> this one is Letter Request
+                # some new AgentMessage(type, messagePayload)
+                # message.send()
+
+            # once message sent, alert user the request has ben submitted with simple messaging
+        else:  # IF NO HUMANS MATCHING LOOKUP BY EMAIL, THEN ALERT USER THEY ARE NOT IN THE SYSTEM AND CONTACT THEIR AGENT
+            self.response.out.write("no matching human by email in db for email provided (i don't understand pythong substitution or else you would see the email")#:1",requestEmail)
 
             # if a human result,
             # then post a request referencing human.id
