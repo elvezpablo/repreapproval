@@ -7,18 +7,23 @@
 	<div class="span12">	
 	    <div class="span6">
 		    <label>Client</label>
+		    {{#if data.users }}
 		    <select class="span4 required" id="clientList" name="clientList">
 		      <option value="">Choose a client</option>	
-		      {{#each users}}
+		      {{#each data.users}}
 		      	<option value="{{id}}">{{fullname}}</option>
 		      {{/each}}
 			</select>			
 			<span class="help-block" id="clientListHelp">Can't find the client you're looking for? <a href="#newClientModal" role="button" data-toggle="modal">Create a new one</a>.</span>						
+			{{/if}}
+			{{#if data.user }}
+				<h3>{{ data.user.fullname }}</h3>
+			{{/if}}
 		</div>
 		<div class="span5">
 			<label>Expiration Date</label>			
 			<div class="input-append">
-				<input type="text" class="span2 required" id="expirationDate" name="expirationDate">
+				<input type="text" class="span2 required" value="{{data.letter.expirationDate }}" id="expirationDate" name="expirationDate">
 				<button class="btn btn-primary" type="button" id="expiresToday">Today</button>
 				<button class="btn" type="button" id="expires60">+60</button>		
 		    </div>
@@ -31,7 +36,7 @@
 		    <label>Purchase Price</label>
 			<div class="input-prepend input-append">
 				<span class="add-on">$</span>			  
-				<input class="span2 required number" type="text" id="purchasePrice" name="purchasePrice" value="" minlength="5" style="text-align: right" placeholder="100,000">	
+				<input class="span2 required number" type="text" id="purchasePrice" name="purchasePrice" value="{{commas data.letter.purchasePrice }}" minlength="5" style="text-align: right" placeholder="100,000">	
 				<span class="add-on">.00</span>
 			</div>
 			<label for="purchasePrice" class="error" style="">This field is required.</label>
@@ -40,7 +45,7 @@
 			 <label>Down Payment</label>
 			<div class="input-prepend input-append">
 				<span class="add-on">$</span>			  
-				<input class="span2 required number" type="text" id="downPayment" name="downPayment" value="" minlength="3" style="text-align: right" placeholder="10,000">	
+				<input class="span2 required number" type="text" id="downPayment" name="downPayment" value="{{commas data.letter.downPayment }}" minlength="3" style="text-align: right" placeholder="10,000">	
 				<span class="add-on">.00</span>
 			</div>
 			<label for="downPayment" class="error" style="">This field is required.</label>	    
@@ -51,22 +56,26 @@
 		<div class="span6">
 			<label>Loan Term</label>
 			<select class="span4 required" id="loanTerm" name="loanTerm">
-				<option value="">Choose a term</option>
-		      <option value="10">10 yr</option>
-		      <option value="20">15 yr</option>
-		      <option value="10">20 yr</option>
-		      <option value="10">25 yr</option>
-		      <option value="10">30 yr</option>
-		      <option value="10">40 yr</option>			  
+				{{#select data.letter.loanTerm}}
+					<option value="">Choose a term</option>
+					<option value="10 yr">10 yr</option>
+					<option value="15 yr">15 yr</option>
+					<option value="20 yr">20 yr</option>
+					<option value="25 yr">25 yr</option>
+					<option value="30 yr">30 yr</option>
+					<option value="40 yr">40 yr</option>			  
+				{{/select}}
 			</select>
 		</div>
 		<div class="span5">
 			<label>Loan Type</label>
 			<select class="span4 required" id="loanType" name="loanType">
-		      <option value="">Choose a loan type</option>
-		      <option value="Other">Other</option>	  
-		      <option value="Conventional">Conventional</option>	  
-		      <option value="FHA">FHA</option>	  
+				{{#select data.letter.loanType}}	
+			      <option value="">Choose a loan type</option>
+			      <option value="Other">Other</option>	  
+			      <option value="Conventional">Conventional</option>	  
+			      <option value="FHA">FHA</option>	
+		      	{{/select}}  
 			</select>
 		</div>
 	</div>	
@@ -74,22 +83,26 @@
 		<div class="span6">
 			<label>Property Type</label>
 			<select class="span4 required" id="propertyType" name="propertyType">
-		      <option value="">Choose a property type</option>
-		      <option value="SFR">SFR</option>	  
-		      <option value="Condo">Condo</option>	  
-		      <option value="Townhome">Townhome</option>	
-		      <option value="2-4 Unit">2-4 Unit</option>	  
-		      <option value="PUD">PUD</option>	  
-		      <option value="Coop">Coop</option>	  
+				{{#select data.letter.propertyType}}
+					<option value="">Choose a property type</option>
+					<option value="SFR">SFR</option>	  
+					<option value="Condo">Condo</option>	  
+					<option value="Townhome">Townhome</option>	
+					<option value="2-4 Unit">2-4 Unit</option>	  
+					<option value="PUD">PUD</option>	  
+					<option value="Coop">Coop</option>	
+		      	{{/select}}  
 			</select>
 		</div>
 		<div class="span5">	
 			<label>Occupancy</label>
 			<select class="span4 required" id="occupancy" name="occupancy">
-		      <option value="">Choose an occupancy</option>
-		      <option value="Owner Occupied">Owner Occupied</option>	  
-		      <option value="Second Home">Second Home</option>	  
-		      <option value="Townhome">Investment</option>	 
+				{{#select data.letter.occupancy}}
+					<option value="">Choose an occupancy</option>
+					<option value="Owner Occupied">Owner Occupied</option>	  
+					<option value="Second Home">Second Home</option>	  
+					<option value="Investment">Investment</option>	
+		      	{{/select}}  
 			</select>
 		</div>
 	</div>
@@ -99,7 +112,7 @@
 			<label>Maximum Qualified Loan Amount</label>
 			<div class="input-prepend input-append">
 				<span class="add-on">$</span>			  
-				<input class="span2 required number" type="text" id="loanAmount" name="loanAmount" value="" minlength="5" style="text-align: right" placeholder="100,000">	
+				<input class="span2 required number" type="text" id="loanAmount" name="loanAmount" value="{{commas data.letter.loanAmount }}" minlength="5" style="text-align: right" placeholder="100,000">	
 				<span class="add-on">.00</span>
 			</div>
 			<label for="loanAmount" class="error" style="">This field is required.</label>		
@@ -107,7 +120,7 @@
     	<div class="span5 ">	
     		<label>Maximum Qualified Interest Rate</label>
 			<div class="input-prepend input-append">						 
-				<input class="span2 required number" type="text" id="interestRate" name="interestRate" value="" minlength="1" style="text-align: right" placeholder="0.0">	
+				<input class="span2 required number" type="text" id="interestRate" name="interestRate" value="{{commas data.letter.interestRate }}" minlength="1" style="text-align: right" placeholder="0.0">	
 				<span class="add-on">%</span>
 			</div>
 			<label for="interestRate" class="error" style="">This field is required.</label>
