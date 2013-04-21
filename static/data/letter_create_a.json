@@ -1,0 +1,13 @@
+[
+	{
+		"user" : {
+			"name" : "Joe Schmoe",
+			"address" : "1234 California St.",
+			"city" : "Berkeley",
+			"state" : "CA",
+			"zip" : "94444"
+		},
+		"expires" : "08/16/13",
+		"loan_amount" : "523000"
+	}
+]

@@ -12,22 +12,21 @@ handlers:
 - url: /images
   static_dir: static/images
 
+- url: /data
+  static_dir: static/data
+
 - url: /js
   static_dir: static/js
 
-- url: /demo
-  static_dir: static/pages/demo
+- url: /libs
+  static_dir: static/libs
 
-- url: /docs
-  static_dir: static/pages/docs
+- url: /templates
+  static_dir: static/templates
 
 - url: /
-  static_files: static/pages/index.html
-  upload: static/pages/(.*)
-
-- url: /dev
-  static_files: static/pages/dev.html
-  upload: static/pages/(.*)
+  static_files: static/index.html
+  upload: static/(.*)
 
 - url: .*
   script: repreapproval.app

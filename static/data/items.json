@@ -1,0 +1,26 @@
+[
+	{
+		"title" : "Sometitle0",
+		"author" : "SomeAuthor0",
+		"id" : "100",
+		"date" : "02/01/03"
+	},
+	{
+		"title" : "Sometitle1",
+		"author" : "SomeAuthor1",
+		"id" : "101",
+		"date" : "02/01/03"		
+	},
+	{
+		"title" : "Sometitle2",
+		"author" : "SomeAuthor2",
+		"id" : "102",
+		"date" : "02/01/03"		
+	},
+	{
+		"title" : "Sometitle3",
+		"author" : "SomeAuthor3",
+		"id" : "103",
+		"date" : "02/01/03"		
+	}
+]
