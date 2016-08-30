@@ -1,0 +1,5 @@
+td {background: none repeat scroll 0 0 #FFFFFF; border: 1px solid #E6EDF2 !important; color: #666; padding:0px;}
+th, td {padding:5px 10px !important;}
+table, th, td {border-radius: 0;}
+td, th {padding:5px !important;}
+.str_align p{clear:both !important;padding:0 !important;}

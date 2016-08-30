@@ -19,7 +19,7 @@
         <?php include_once("analyticstracking.php") ?>
             <header>
                 <?php include("includes/header.php");?>
-                    <?php include("includes/slider.php");?>
+                <?php include("includes/slider.php"); ?>
             </header>
             <div class="container">
                 <div class="row">
@@ -30,12 +30,12 @@
             <div class="space10"></div>
             <div class="container">
                 <div class="row">
-                    <?php $selTopContent=mysql_query("select * from home_topcontent where status='1' order by order_id");
-$i=0;
-while($TopContent=mysql_fetch_assoc($selTopContent))
-{
-	$i++;
-?>
+                    <?php
+                      $selTopContent=mysql_query("select * from home_topcontent where status='1' order by order_id");
+                      $i=0;
+                      while($TopContent=mysql_fetch_assoc($selTopContent)) {
+	                        $i++;
+                    ?>
                         <div class="col-md-3">
                             <div class="service">
                                 <h4><?php echo stripslashes($TopContent['title']); ?></h4>
@@ -117,21 +117,13 @@ while($TopContent=mysql_fetch_assoc($selTopContent))
                 </div>
             </div>
             <div class="space20"></div>
-            <!-- Recent News -->
-            <!--<div class="container">
-<div class="row">
-<div class="col-md-12">
-<h5 style="color:#93CE52 !important;font-weight:bold;">All Access + Instant Customization + Precision = Offer Accepted</h5>
-</div>
-</div>
-</div> -->
             <div class="space10"></div>
             <div class="container">
                 <div class="row">
-                    <?php $SelScreenshot=mysql_query("select * from  home_scrrenshot where status='1' order by order_id");
-  while($screenShot=mysql_fetch_assoc($SelScreenshot))
-  {
-   ?>
+                      <?php
+                        $SelScreenshot=mysql_query("select * from  home_scrrenshot where status='1' order by order_id");
+                        while($screenShot=mysql_fetch_assoc($SelScreenshot)) {
+                      ?>
                         <div class="col-md-3 col-sm-6">
 
                             <div class="item-box">
